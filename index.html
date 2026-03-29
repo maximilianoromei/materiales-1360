@@ -69,6 +69,35 @@
   .list-card-title { font-size: 13px; font-weight: 500; flex: 1; }
   .list-card-tag { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 20px; background: var(--naranja-suave); color: var(--naranja-deep); white-space: nowrap; }
 
+  /* ── TAB NAV ── */
+  .tab-nav { background: var(--blanco); border-bottom: 2px solid var(--borde); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+  .tab-nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; display: flex; gap: 0; }
+  .tab-btn { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--gris-medio); background: none; border: none; cursor: pointer; padding: 16px 24px; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color .2s, border-color .2s; white-space: nowrap; display: flex; align-items: center; gap: 7px; letter-spacing: .02em; }
+  .tab-btn:hover { color: var(--naranja); }
+  .tab-btn.active { color: var(--naranja); border-bottom-color: var(--naranja); }
+  .tab-btn .tab-badge { font-size: 10px; font-weight: 700; background: var(--naranja); color: white; border-radius: 20px; padding: 1px 7px; }
+  .tab-btn.active .tab-badge { background: var(--naranja-deep); }
+
+  /* ── TAB PANELS ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── PANEL JDA — subsecciones ── */
+  .jda-section { margin-bottom: 44px; }
+  .jda-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--borde); }
+  .jda-icon { font-size: 18px; }
+  .jda-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--gris-oscuro); }
+
+  /* ── PANEL NOTAS — estado vacío ── */
+  .notas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .nota-categoria { background: var(--blanco); border: 1px solid var(--borde); border-radius: 12px; padding: 24px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+  .nota-categoria-icon { font-size: 28px; }
+  .nota-categoria-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--gris-oscuro); }
+  .nota-categoria-desc { font-size: 11.5px; color: var(--gris-medio); line-height: 1.5; }
+  .nota-badge-pronto { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; background: var(--naranja-suave); color: var(--naranja-deep); margin-top: 4px; }
+  .notas-aviso { background: var(--blanco); border: 1px solid var(--borde); border-left: 4px solid var(--naranja); border-radius: 8px; padding: 16px 20px; font-size: 13px; color: var(--gris-medio); line-height: 1.6; margin-bottom: 32px; }
+  .notas-aviso strong { color: var(--gris-oscuro); }
+
   footer { background: var(--gris-oscuro); color: rgba(255,255,255,.5); text-align: center; font-size: 12px; padding: 22px 40px; }
   footer strong { color: var(--naranja-vivo); }
 
@@ -76,6 +105,8 @@
     .hero-content{padding:0 22px 34px}
     .container{padding:36px 18px 60px}
     .cards{grid-template-columns:1fr}
+    .tab-nav-inner{padding:0 10px; overflow-x:auto;}
+    .tab-btn{padding:14px 14px; font-size:12px;}
   }
 </style>
 </head>
@@ -97,6 +128,17 @@
 </div>
 <div class="accent-bar"></div>
 
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('materiales', this)">📚 Materiales del Curso</button>
+    <button class="tab-btn" onclick="switchTab('jda', this)">⚖️ Jurisprudencia, Doctrina y Actividades <span class="tab-badge">3</span></button>
+    <button class="tab-btn" onclick="switchTab('notas', this)">📝 Evaluaciones y Notas</button>
+  </div>
+</nav>
+
+<!-- PANEL: MATERIALES -->
+<div id="tab-materiales" class="tab-panel active">
 <div class="container">
 
   <!-- 1. INTRODUCCIÓN -->
@@ -474,20 +516,113 @@
         <span class="list-card-title">Ley General de Sociedades 19.550 · InfoLEG</span>
         <span class="list-card-tag">Normativa</span>
       </a>
-      <a href="https://www.csjn.gov.ar/" target="_blank" class="list-card">
-        <span class="list-card-icon">🔍</span>
-        <span class="list-card-title">CSJN — Buscador de jurisprudencia oficial</span>
-        <span class="list-card-tag">Jurisprudencia</span>
+
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-materiales -->
+
+<!-- PANEL: JURISPRUDENCIA, DOCTRINA Y ACTIVIDADES -->
+<div id="tab-jda" class="tab-panel">
+<div class="container">
+
+  <!-- JURISPRUDENCIA -->
+  <div class="jda-section section">
+    <div class="jda-header">
+      <span class="jda-icon">⚖️</span>
+      <span class="jda-title">Jurisprudencia</span>
+    </div>
+    <div class="list-cards">
+      <a href="https://drive.google.com/file/d/144ERqmdjoYZqVmO4zUfKyzpwGk4M6h5e/view?usp=sharing" target="_blank" class="list-card">
+        <span class="list-card-icon">📄</span>
+        <span class="list-card-title">Fallo Hormisur y otros — Concurso por agrupamiento</span>
+        <span class="list-card-tag">Fallo</span>
       </a>
-      <a href="https://www.infojus.gob.ar/" target="_blank" class="list-card">
-        <span class="list-card-icon">🔍</span>
-        <span class="list-card-title">InfoJUS — Sistema Argentino de Información Jurídica</span>
-        <span class="list-card-tag">Base de datos</span>
+    </div>
+  </div>
+
+  <!-- DOCTRINA -->
+  <div class="jda-section section">
+    <div class="jda-header">
+      <span class="jda-icon">📖</span>
+      <span class="jda-title">Doctrina</span>
+    </div>
+    <div class="list-cards">
+      <a href="https://drive.google.com/file/d/1qAdJwvS2BlWm6O6ffXmQNAXXLQnLUcT-/view?usp=sharing" target="_blank" class="list-card">
+        <span class="list-card-icon">📝</span>
+        <span class="list-card-title">Plenario Difry Translinea — Artículo Dr. Fernández</span>
+        <span class="list-card-tag">Artículo</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ACTIVIDADES -->
+  <div class="jda-section section">
+    <div class="jda-header">
+      <span class="jda-icon">✏️</span>
+      <span class="jda-title">Actividades de Clase</span>
+    </div>
+    <div class="list-cards">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-NBH9P0VsjncINip-eGgFDoEfcQlcxljD0LVS6C1d06aIWg/viewform?usp=header" target="_blank" class="list-card">
+        <span class="list-card-icon">📋</span>
+        <span class="list-card-title">Actividad — Edicto Concursal</span>
+        <span class="list-card-tag">Formulario</span>
       </a>
     </div>
   </div>
 
 </div>
+</div><!-- /tab-jda -->
+
+<!-- PANEL: EVALUACIONES Y NOTAS -->
+<div id="tab-notas" class="tab-panel">
+<div class="container">
+
+  <div class="notas-aviso">
+    <strong>Las notas se publicarán aquí a medida que se obtengan.</strong><br>
+    Cuando estén disponibles, vas a poder consultar tus resultados en cada categoría. Las resoluciones de impugnaciones y recuperatorios también se informarán por este medio.
+  </div>
+
+  <div class="notas-grid">
+    <div class="nota-categoria">
+      <span class="nota-categoria-icon">📋</span>
+      <div class="nota-categoria-title">Parcialitos</div>
+      <div class="nota-categoria-desc">Evaluaciones parciales a lo largo del cuatrimestre.</div>
+      <span class="nota-badge-pronto">Próximamente</span>
+    </div>
+    <div class="nota-categoria">
+      <span class="nota-categoria-icon">🔬</span>
+      <div class="nota-categoria-title">Trabajos Prácticos</div>
+      <div class="nota-categoria-desc">Notas de los trabajos y actividades evaluadas en clase.</div>
+      <span class="nota-badge-pronto">Próximamente</span>
+    </div>
+    <div class="nota-categoria">
+      <span class="nota-categoria-icon">📊</span>
+      <div class="nota-categoria-title">Notas Promedio</div>
+      <div class="nota-categoria-desc">Promedio final de cursada para la regularidad.</div>
+      <span class="nota-badge-pronto">Próximamente</span>
+    </div>
+    <div class="nota-categoria">
+      <span class="nota-categoria-icon">📜</span>
+      <div class="nota-categoria-title">Resoluciones</div>
+      <div class="nota-categoria-desc">Resoluciones de impugnaciones, recuperatorios y situaciones especiales.</div>
+      <span class="nota-badge-pronto">Próximamente</span>
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-notas -->
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 
 <footer>
   <strong>Derecho Crediticio, Bursátil e Insolvencia · Materia 1360</strong><br>
